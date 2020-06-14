@@ -34,11 +34,11 @@ app.get('/api/notes', async (req, res, next) => {
 // Posting notes to db
 app.post('/api/notes', async (req, res, next) => {
   try {
-    const newNote = req.query;
+    const newNote = req.body;
     // Reading existing notes
     const notes = JSON.parse(await readNotes());
     // Adding a unique ID and pushing new note to existing array
-    newNote['id'] = notes.length;
+    newNote['id'] = notes.length + 1;
     notes.push(newNote);
 
     // Saving the new notes array to db
@@ -77,7 +77,7 @@ app.delete('/api/notes/:id', async (req, res, next) => {
     // Saving the new notes array to db
     writeNote(notes);
 
-    res.status(200);
+    res.status(200).end();
   } catch (err) {
     console.log(`Error: server.js - app.delete('api/notes'): ${err}`);
     next(err);
