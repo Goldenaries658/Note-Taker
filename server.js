@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 8080;
 // Parsing data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static(__dirname + '/public'));
 
 // Defining paths
 const htmlPath = path.join(__dirname, './public');
