@@ -4,6 +4,7 @@
   "description": "A note taking app demonstrating use of an Express backend.",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
