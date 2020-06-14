@@ -34,6 +34,32 @@ app.get('/api/notes', async (req, res) => {
   }
 });
 
+// Posting notes to db
+app.post('/api/notes', async (req, res) => {
+  try {
+    const newNote = req.query;
+    // Reading existing notes
+    const notes = JSON.parse(
+      fs.readFileSync(notesDB, (err, data) => {
+        if (err) throw new Error(`server.js ln42 - fs.readFile(): ${err}`);
+        return data;
+      })
+    );
+    // pushing new note to existing array
+    notes.push(newNote);
+
+    // Saving the new note to db
+    console.log('Writing Note...');
+    fs.writeFileSync(notesDB, JSON.stringify(notes));
+    console.log('Save Complete!');
+
+    // Returning new note to client
+    res.status(200).send(newNote);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 // HTML Routes
 app.get('/notes', (req, res) => res.sendFile(`${htmlPath}/notes.html`));
 app.get('*', (req, res) => res.sendFile(`${htmlPath}/index.html`));
