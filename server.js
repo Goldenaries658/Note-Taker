@@ -17,19 +17,15 @@ const notesDB = path.join(apiPath + '/db.json');
 
 // API Routes
 // Returning notes from db
-app.get('/api/notes', async (req, res) => {
+app.get('/api/notes', async (req, res, next) => {
   try {
     // Reading notes and saving to variable as a string
-    const notes = fs.readFileSync(notesDB, (err, data) => {
-      if (err) throw new Error(`server.js ln20 - fs.readFile(): ${err}`);
-      return data;
-    });
-
-    // Parsing and returning the notes
-    const notesJSON = JSON.parse(notes);
-    return res.status(200).json(notesJSON);
+    const notes = JSON.parse(await readNotes());
+    // Returning the notes
+    return res.status(200).json(notes);
   } catch (err) {
-    console.log(err);
+      console.log(`Error: server.js - ln23 - readNotes(): ${err}`);
+      next(err);
     return res.status(404).send('Error 404: No Notes Found.');
   }
 });
@@ -39,12 +35,7 @@ app.post('/api/notes', async (req, res) => {
   try {
     const newNote = req.query;
     // Reading existing notes
-    const notes = JSON.parse(
-      fs.readFileSync(notesDB, (err, data) => {
-        if (err) throw new Error(`server.js ln42 - fs.readFile(): ${err}`);
-        return data;
-      })
-    );
+    const notes = JSON.parse(await readNotes());
     // pushing new note to existing array
     notes.push(newNote);
 
@@ -56,13 +47,22 @@ app.post('/api/notes', async (req, res) => {
     // Returning new note to client
     res.status(200).send(newNote);
   } catch (err) {
-    console.log(err);
+    console.log(`Error: server.js - ln42 - readNotes(): ${err}`);
+    next(err);
   }
 });
 
 // HTML Routes
 app.get('/notes', (req, res) => res.sendFile(`${htmlPath}/notes.html`));
 app.get('*', (req, res) => res.sendFile(`${htmlPath}/index.html`));
+
+// Function to read existing notes#
+const readNotes = async () => {
+  return fs.readFileSync(notesDB, (err, data) => {
+    if (err) throw err;
+    return data;
+  });
+};
 
 // Starting server
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
