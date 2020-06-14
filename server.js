@@ -24,7 +24,7 @@ app.get('/api/notes', async (req, res, next) => {
     // Returning the notes
     return res.status(200).json(notes);
   } catch (err) {
-    console.log(`Error: server.js - ln23 - readNotes(): ${err}`);
+    console.log(`Error: server.js - app.get('api/notes'): ${err}`);
     next(err);
     return res.status(404).send('Error 404: No Notes Found.');
   }
@@ -42,13 +42,13 @@ app.post('/api/notes', async (req, res, next) => {
 
     // Saving the new note to db
     console.log('Writing Note...');
-    fs.writeFileSync(notesDB, JSON.stringify(notes));
+    fs.writeFileSync(notesDB, JSON.stringify(notes, null, 2));
     console.log('Save Complete!');
 
     // Returning new note to client
     res.status(200).send(newNote);
   } catch (err) {
-    console.log(`Error: server.js - ln42 - readNotes(): ${err}`);
+    console.log(`Error: server.js - app.post('api/notes'): ${err}`);
     next(err);
   }
 });
