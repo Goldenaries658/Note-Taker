@@ -99,7 +99,7 @@ const readNotes = async () => {
 };
 
 const writeNote = (notes) => {
-  console.log('Writing Notes to db...');
+  console.log('Writing new Notes array to db...');
   fs.writeFileSync(notesDB, JSON.stringify(notes, null, 2));
   console.log('Save Complete!');
 };
