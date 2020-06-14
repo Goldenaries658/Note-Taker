@@ -24,19 +24,20 @@ app.get('/api/notes', async (req, res, next) => {
     // Returning the notes
     return res.status(200).json(notes);
   } catch (err) {
-      console.log(`Error: server.js - ln23 - readNotes(): ${err}`);
-      next(err);
+    console.log(`Error: server.js - ln23 - readNotes(): ${err}`);
+    next(err);
     return res.status(404).send('Error 404: No Notes Found.');
   }
 });
 
 // Posting notes to db
-app.post('/api/notes', async (req, res) => {
+app.post('/api/notes', async (req, res, next) => {
   try {
     const newNote = req.query;
     // Reading existing notes
     const notes = JSON.parse(await readNotes());
-    // pushing new note to existing array
+    // Adding a unique ID and pushing new note to existing array
+    newNote['id'] = notes.length;
     notes.push(newNote);
 
     // Saving the new note to db
@@ -56,7 +57,7 @@ app.post('/api/notes', async (req, res) => {
 app.get('/notes', (req, res) => res.sendFile(`${htmlPath}/notes.html`));
 app.get('*', (req, res) => res.sendFile(`${htmlPath}/index.html`));
 
-// Function to read existing notes#
+// Function to read existing notes
 const readNotes = async () => {
   return fs.readFileSync(notesDB, (err, data) => {
     if (err) throw err;
