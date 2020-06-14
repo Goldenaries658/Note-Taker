@@ -10,8 +10,10 @@ const PORT = process.env.PORT || 8080;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Defining path for html files
+// Defining paths
 const htmlPath = path.join(__dirname, './public');
+const apiPath = path.join(__dirname, './db');
+const notesDB = path.join(apiPath + '/db.json');
 
 // HTML Routes
 app.get('/notes', (req, res) => res.sendFile(`${htmlPath}/notes.html`));
