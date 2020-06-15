@@ -1,8 +1,8 @@
 <h1 align="center">Note Taker</div>
 
 <div align="center">
-  <img src="https://img.shields.io/github/license/Goldenaries658/README-Generator" alt="License Badge" />
-  <img src="https://img.shields.io/github/issues/Goldenaries658/README-Generator" alt="Issues Badge"/>
+  <img src="https://img.shields.io/github/license/Goldenaries658/Note-Taker" alt="License Badge" />
+  <img src="https://img.shields.io/github/issues/Goldenaries658/Note-Taker" alt="Issues Badge"/>
 </div>
 
 ## Description
@@ -11,7 +11,7 @@ A note taking app demonstrating use of an Express backend.
 
 ## Demo
 
-[Deployed app](https://cryptic-crag-98706.herokuapp.com/notes)
+[Deployed app](https://cryptic-crag-98706.herokuapp.com/)
 
 ## Contents
 
